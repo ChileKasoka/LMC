@@ -77,6 +77,7 @@ export default function Maids() {
 
   {/* Right side: button */}
   <button
+  onClick={() => navigate("/maids/create")}
     style={{
       background: "#0b1a28ff",
       color: "#fff",

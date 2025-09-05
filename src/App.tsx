@@ -12,6 +12,10 @@ import Reports from "./app/pages/Reports";
 import Services from "./app/pages/Services";
 import Login from "./app/pages/Login";
 import Register from "./app/pages/Register";
+import CreateMaids from "./app/pages/Maids/CreateMaids";
+import CreateClients from "./app/pages/Clients/CreateClients";
+import CreateBooking from "./app/pages/Bookings/CreateBooking";
+import CreateServices from "./app/pages/Services/CreateServices";
 
 function App() {
   return (
@@ -22,10 +26,14 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="maids" element={<Maids/>}/>
+          <Route path="maids/create" element={<CreateMaids/>}/>
           <Route path="clients" element={<Clients />} />
+          <Route path="clients/create" element={<CreateClients />} />
           <Route path="clients/:id" element={<ClientDetails />} />
           <Route path="bookings" element={<Bookings />} />
+          <Route path="bookings/create" element={<CreateBooking />} />
           <Route path="services" element={<Services />} />
+          <Route path="services/create" element={<CreateServices />} />
           <Route path="payments" element={<Payments />} />
           <Route path="reports" element={<Reports />} />
           <Route path="notifications" element={<Notifications />} />

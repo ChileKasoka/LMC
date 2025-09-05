@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Clients() {
+const navigate = useNavigate();
   const clients = [
     { name: "Jane Doe", email: "jane@example.com", phone: "+260 971 111 222", status: "Active" },
     { name: "John Smith", email: "john@example.com", phone: "+260 972 333 444", status: "Inactive" },
@@ -54,6 +57,7 @@ export default function Clients() {
           <option>Inactive</option>
         </select>
         <button
+        onClick={() => navigate("/clients/create")}
           style={{
             background: "#0b1a28ff",
             color: "#ffff",

@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Bookings() {
+    const navigate = useNavigate();
   // Mock data (replace with API later)
   const bookings = [
     {
@@ -50,6 +53,7 @@ export default function Bookings() {
     />
   </div>
         <button
+        onClick={() => navigate("/bookings/create")}
           style={{
             background: "#0b1a28ff",
             color: "#fff",

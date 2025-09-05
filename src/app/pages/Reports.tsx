@@ -47,6 +47,7 @@ export default function Reports() {
           borderRadius: "10px",
           padding: "1rem",
           boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+          color: "#000000ff",
         }}
       >
         <h3 style={{ margin: "0 0 1rem 0", color: "#333" }}>Service Performance</h3>

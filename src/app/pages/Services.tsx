@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Services() {
+    const navigate = useNavigate();
   // Mock data (replace later with API)
   const services = [
     { id: 1, name: "House Cleaning", price: "K200", duration: "2 hrs" },
@@ -12,6 +15,7 @@ export default function Services() {
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button
+        onClick={() => navigate("/services/create")}
           style={{
             background: "#0b1a28ff",
             color: "#fff",
