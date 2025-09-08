@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 export default function BookingForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    client: "",
-    maid: "",
-    serviceType: "",
-    date: "",
-    time: "",
-    duration: "",
+    clientName: "",
+    maidName: "",
+    service: "",
+    bookingType: "Piece Work",
+    startDate: "",
+    endDate: "",
+    frequency: "",
+    address: "",
     notes: "",
-    status: "Pending",
   });
 
   const handleChange = (
@@ -22,7 +23,7 @@ export default function BookingForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Booking Form submitted:", form);
+    console.log("Booking submitted:", form);
 
     // Example API call:
     // await fetch("http://localhost:8080/api/bookings", {
@@ -31,7 +32,7 @@ export default function BookingForm() {
     //   body: JSON.stringify(form),
     // });
 
-    navigate("/bookings"); // redirect back to bookings list
+    navigate("/bookings");
   };
 
   const inputStyle = {
@@ -39,8 +40,6 @@ export default function BookingForm() {
     border: "1px solid #ccc",
     borderRadius: "6px",
     flex: 1,
-    background: "#ffffffff",
-    color: "#000000ff"
   };
 
   return (
@@ -69,69 +68,88 @@ export default function BookingForm() {
       >
         <h2 style={{ textAlign: "center", color: "#0b1a28ff" }}>New Booking</h2>
 
-        {/* Client and Maid Row */}
+        {/* Row: Client + Maid */}
         <div style={{ display: "flex", gap: "1rem" }}>
           <input
             type="text"
-            name="client"
+            name="clientName"
             placeholder="Client Name"
-            value={form.client}
+            value={form.clientName}
             onChange={handleChange}
             required
             style={inputStyle}
           />
           <input
             type="text"
-            name="maid"
+            name="maidName"
             placeholder="Maid Name"
-            value={form.maid}
+            value={form.maidName}
             onChange={handleChange}
             required
             style={inputStyle}
           />
         </div>
 
-        {/* Service Type */}
-        <select
-          name="serviceType"
-          value={form.serviceType}
-          onChange={handleChange}
-          style={inputStyle}
-          required
-        >
-          <option value="">Select Service</option>
-          <option value="Cleaning">Cleaning</option>
-          <option value="Cooking">Cooking</option>
-          <option value="Babysitting">Babysitting</option>
-          <option value="Other">Other</option>
-        </select>
+        {/* Row: Service + Booking Type */}
+        <div style={{ display: "flex", gap: "1rem" }}>
+          <input
+            type="text"
+            name="service"
+            placeholder="Service (e.g. Cleaning, Laundry)"
+            value={form.service}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
+          <select
+            name="bookingType"
+            value={form.bookingType}
+            onChange={handleChange}
+            style={inputStyle}
+          >
+            <option value="Piece Work">Piece Work</option>
+            <option value="Full-time">Full-time</option>
+          </select>
+        </div>
 
-        {/* Date and Time Row */}
+        {/* Row: Start + End Dates */}
         <div style={{ display: "flex", gap: "1rem" }}>
           <input
             type="date"
-            name="date"
-            value={form.date}
+            name="startDate"
+            value={form.startDate}
             onChange={handleChange}
-            required
             style={inputStyle}
           />
           <input
-            type="time"
-            name="time"
-            value={form.time}
+            type="date"
+            name="endDate"
+            value={form.endDate}
             onChange={handleChange}
-            required
             style={inputStyle}
           />
         </div>
 
-        {/* Duration */}
+        {/* Frequency */}
+        <select
+          name="frequency"
+          value={form.frequency}
+          onChange={handleChange}
+          style={inputStyle}
+        >
+          <option value="">Select Frequency</option>
+          <option value="One-time">One-time</option>
+          <option value="Daily">Daily</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Monthly">Monthly</option>
+        </select>
+
+        {/* Address */}
         <input
-          type="number"
-          name="duration"
-          placeholder="Duration (hours)"
-          value={form.duration}
+          type="text"
+          name="address"
+          placeholder="Service Address"
+          value={form.address}
           onChange={handleChange}
           required
           style={inputStyle}
@@ -140,31 +158,12 @@ export default function BookingForm() {
         {/* Notes */}
         <textarea
           name="notes"
-          placeholder="Special Instructions / Notes"
+          placeholder="Additional instructions (optional)"
           value={form.notes}
           onChange={handleChange}
-          style={{
-            padding: "0.7rem",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-            minHeight: "100px",
-            background: "#ffffffff",
-            color: "#000000ff"
-          }}
+          rows={4}
+          style={{ ...inputStyle, resize: "vertical" }}
         />
-
-        {/* Status */}
-        <select
-          name="status"
-          value={form.status}
-          onChange={handleChange}
-          style={inputStyle}
-        >
-          <option value="Pending">Pending</option>
-          <option value="Confirmed">Confirmed</option>
-          <option value="Completed">Completed</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
 
         <button
           type="submit"
@@ -178,7 +177,7 @@ export default function BookingForm() {
             cursor: "pointer",
           }}
         >
-          Save Booking
+          Confirm Booking
         </button>
       </form>
     </div>

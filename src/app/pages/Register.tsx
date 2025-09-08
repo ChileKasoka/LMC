@@ -57,9 +57,9 @@ export default function Register() {
         textAlign: "center",
       }}>
         <img
-        src="/clean.svg"
+        src="/LHA.png"
         alt="Local Maid Center Logo"
-        style={{ width: "50px", marginBottom: "2rem"}} 
+        style={{ width: "70px", marginBottom: "2rem"}} 
         />
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <input
