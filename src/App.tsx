@@ -16,6 +16,7 @@ import CreateMaids from "./app/pages/Maids/CreateMaids";
 import CreateClients from "./app/pages/Clients/CreateClients";
 import CreateBooking from "./app/pages/Bookings/CreateBooking";
 import CreateServices from "./app/pages/Services/CreateServices";
+import PaymentProcess from "./app/pages/PaymentsModule/PaymentProcess";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="services" element={<Services />} />
           <Route path="services/create" element={<CreateServices />} />
           <Route path="payments" element={<Payments />} />
+          <Route path="payments/process" element={<PaymentProcess />} />
           <Route path="reports" element={<Reports />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="settings" element={<Settings />} />
