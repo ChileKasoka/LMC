@@ -1,129 +1,303 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+
+interface MenuItem {
+  label: string;
+  icon: string;
+  to?: string;
+  children?: { label: string; to: string }[];
+}
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
 
+  // Detect screen size for responsiveness
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 900;
+      setIsMobile(mobile);
+      if (mobile) setIsOpen(false);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleLogout = () => {
-    // Clear any auth tokens / session if needed
-    // localStorage.removeItem("token"); // example
     console.log("Logging out...");
-    navigate("/login"); // redirect to login page
+    navigate("/login");
   };
 
+  const toggleMenu = (menu: string) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [menu]: !prev[menu],
+    }));
+  };
+
+  const menuItems: MenuItem[] = [
+    { label: "Dashboard", icon: "🏠", to: "/" },
+    {
+      label: "Operations",
+      icon: "⚙️",
+      children: [
+        { label: "Maids", to: "/maids" },
+        { label: "Clients", to: "/clients" },
+        { label: "Bookings", to: "/bookings" },
+      ],
+    },
+    {
+      label: "Management",
+      icon: "🏢",
+      children: [
+        { label: "Services", to: "/services" },
+        { label: "Payments", to: "/payments" },
+        { label: "Payroll", to: "/payroll" },
+      ],
+    },
+    {
+      label: "Reports",
+      icon: "📊",
+      children: [
+        { label: "Financial", to: "/reports/financial" },
+        { label: "Performance", to: "/reports/performance" },
+      ],
+    },
+    {
+      label: "System",
+      icon: "🧩",
+      children: [
+        { label: "Notifications", to: "/notifications" },
+        { label: "Settings", to: "/settings" },
+      ],
+    },
+  ];
+
   return (
-    <div
-      style={{
-        width: isOpen ? "220px" : "60px",
-        height: "100vh",
-        background: "#131447ff",
-        padding: "1rem",
-        transition: "width 0.3s ease",
-        display: "flex",
-        flexDirection: "column",
-        // justifyContent: "space-between", // ensures logout at bottom
-        overflow: "scroll",
-        scrollbarWidth: "thin",
-        scrollbarColor: "#888 transparent"
-      }}
-    >
-      {/* Top section */}
-      <div>
-        {/* Logo + toggle */}
+    <>
+      {/* Overlay (for mobile view) */}
+      {isMobile && isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.4)",
+            zIndex: 998,
+          }}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        style={{
+          position: isMobile ? "fixed" : "relative",
+          top: 0,
+          left: isOpen ? 0 : isMobile ? "-250px" : 0,
+          width: isOpen ? "240px" : "70px",
+          height: "100vh",
+          background: "#0f172a",
+          color: "white",
+          padding: "1rem",
+          transition: "all 0.3s ease",
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto",
+          scrollbarWidth: "thin",
+          scrollbarColor: "#888 transparent",
+          zIndex: 999,
+          boxShadow: isMobile ? "4px 0 10px rgba(0,0,0,0.3)" : "none",
+        }}
+      >
+        {/* Header */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: isOpen ? "space-between" : "center",
-            marginBottom: "1rem",
+            marginBottom: "1.5rem",
           }}
         >
           {isOpen && (
             <img
               src="/LHA.png"
               alt="Local Maid Center Logo"
-              style={{ width: "70px", filter: "brightness(0) invert(1)" }}
+              style={{ width: "80px", filter: "brightness(0) invert(1)" }}
             />
           )}
 
           <button
             onClick={() => setIsOpen(!isOpen)}
             style={{
-              padding: "0.5rem",
-              cursor: "pointer",
-              background: "#444",
-              color: "white",
+              background: "transparent",
               border: "none",
-              borderRadius: "4px",
-              marginLeft: isOpen ? "1rem" : "0",
+              color: "#fff",
+              fontSize: "1.3rem",
+              cursor: "pointer",
             }}
           >
-            <i className="fa-solid fa-bars text-2xl"></i>
+            <i className="fa-solid fa-bars"></i>
           </button>
         </div>
 
         {/* Navigation */}
         <nav>
           <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-            {[
-              { to: "/", label: "Dashboard", icon: "🏠" },
-              { to: "/maids", label: "Maids", icon: "👩‍🍳" },
-              { to: "/clients", label: "Clients", icon: "👥" },
-              { to: "/bookings", label: "Bookings", icon: "📅" },
-              { to: "/services", label: "Services", icon: "🧹" },
-              { to: "/payments", label: "Payments", icon: "💳" },
-              { to: "/reports", label: "Reports", icon: "📊" },
-              { to: "/notifications", label: "Notifications", icon: "🔔" },
-              { to: "/settings", label: "Settings", icon: "⚙️" },
-            ].map((item, i) => (
-              <li key={i} style={{ margin: "0.5rem 0" }}>
-                <NavLink
-                  to={item.to}
-                  style={({ isActive }) => ({
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    textDecoration: "none",
-                    color: isActive ? "#4CAF50" : "#fff",
-                    fontWeight: isActive ? "bold" : "normal",
-                    padding: "0.5rem",
-                    borderRadius: "6px",
-                    transition: "background 0.2s ease",
-                  })}
-                >
-                  {item.icon} {isOpen && item.label}
-                </NavLink>
+            {menuItems.map((item) => (
+              <li key={item.label} style={{ marginBottom: "0.5rem" }}>
+                {item.children ? (
+                  <>
+                    <button
+                      onClick={() => toggleMenu(item.label)}
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: isOpen ? "space-between" : "center",
+                        background: "transparent",
+                        border: "none",
+                        color: "white",
+                        fontSize: "0.95rem",
+                        fontWeight: "500",
+                        padding: "0.6rem",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                        }}
+                      >
+                        {item.icon} {isOpen && item.label}
+                      </span>
+                      {isOpen && (
+                        <i
+                          className={`fa-solid ${
+                            openMenus[item.label]
+                              ? "fa-chevron-up"
+                              : "fa-chevron-down"
+                          }`}
+                        ></i>
+                      )}
+                    </button>
+
+                    {/* Dropdown submenu */}
+                    {openMenus[item.label] && isOpen && (
+                      <ul
+                        style={{
+                          listStyle: "none",
+                          marginLeft: "1rem",
+                          marginTop: "0.3rem",
+                        }}
+                      >
+                        {item.children.map((sub) => (
+                          <li key={sub.to} style={{ marginBottom: "0.3rem" }}>
+                            <NavLink
+                              to={sub.to}
+                              style={({ isActive }) => ({
+                                display: "block",
+                                padding: "0.4rem 0.6rem",
+                                color: isActive ? "#22c55e" : "#cbd5e1",
+                                textDecoration: "none",
+                                borderRadius: "6px",
+                                transition: "0.2s",
+                                background: isActive ? "#1e293b" : "transparent",
+                              })}
+                              onClick={() => isMobile && setIsOpen(false)}
+                            >
+                              {sub.label}
+                            </NavLink>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                ) : (
+                  <NavLink
+                    to={item.to!}
+                    style={({ isActive }) => ({
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.6rem",
+                      textDecoration: "none",
+                      color: isActive ? "#22c55e" : "#fff",
+                      fontWeight: isActive ? "bold" : "normal",
+                      padding: "0.6rem",
+                      borderRadius: "6px",
+                      transition: "background 0.2s ease",
+                      background: isActive ? "#1e293b" : "transparent",
+                    })}
+                    onClick={() => isMobile && setIsOpen(false)}
+                  >
+                    {item.icon} {isOpen && item.label}
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>
         </nav>
+
+        {/* Logout button */}
+        <div style={{ marginTop: "auto" }}>
+          <button
+            onClick={handleLogout}
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              background: "#e53935",
+              color: "#fff",
+              border: "none",
+              padding: "0.6rem",
+              borderRadius: "6px",
+              cursor: "pointer",
+              justifyContent: isOpen ? "flex-start" : "center",
+              marginTop: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <i className="fa-solid fa-right-from-bracket"></i>
+            {isOpen && "Logout"}
+          </button>
+        </div>
       </div>
 
-      {/* Logout button at bottom */}
-      <div>
-        <button
-          onClick={handleLogout}
+      {/* Mobile header (hamburger) */}
+      {isMobile && !isOpen && (
+        <div
           style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            background: "#e53935",
-            color: "#fff",
-            border: "none",
-            padding: "0.5rem",
-            borderRadius: "6px",
-            cursor: "pointer",
-            justifyContent: isOpen ? "flex-start" : "center",
-            marginTop: "1rem",
-            marginBottom: "2rem",
+            position: "fixed",
+            top: 15,
+            left: 15,
+            zIndex: 1000,
           }}
         >
-          <i className="fa-solid fa-right-from-bracket"></i>
-          {isOpen && "Logout"}
-        </button>
-      </div>
-    </div>
+          <button
+            onClick={() => setIsOpen(true)}
+            style={{
+              background: "#0f172a",
+              color: "white",
+              border: "none",
+              borderRadius: "6px",
+              padding: "0.6rem 0.8rem",
+              fontSize: "1.2rem",
+              cursor: "pointer",
+            }}
+          >
+            <i className="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      )}
+    </>
   );
 }
