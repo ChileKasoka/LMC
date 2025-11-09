@@ -47,6 +47,8 @@ export default function SideMenu() {
         { label: "Maids", to: "/maids" },
         { label: "Clients", to: "/clients" },
         { label: "Bookings", to: "/bookings" },
+        { label: "Availability", to: "/availability" },
+        { label: "Complaints", to: "/complaints" },
       ],
     },
     {
@@ -58,12 +60,22 @@ export default function SideMenu() {
         { label: "Payroll", to: "/payroll" },
       ],
     },
+        {
+      label: "Engagement",
+      icon: "🏢",
+      children: [
+        { label: "Messages", to: "/messages" },
+        { label: "Reviews", to: "/reviews" },
+        { label: "Invoices", to: "/invoices" },
+      ],
+    },
     {
-      label: "Reports",
+      label: "Analytics & Reports",
       icon: "📊",
       children: [
-        { label: "Financial", to: "/reports/financial" },
         { label: "Performance", to: "/reports/performance" },
+        { label: "Customer", to: "/reports/customer" },
+        { label: "Activity Logs", to: "/reports/activity" },
       ],
     },
     {
@@ -72,6 +84,8 @@ export default function SideMenu() {
       children: [
         { label: "Notifications", to: "/notifications" },
         { label: "Settings", to: "/settings" },
+        { label: "User Management", to: "/user-management" },
+        { label: "Policies", to: "/policies" },
       ],
     },
   ];

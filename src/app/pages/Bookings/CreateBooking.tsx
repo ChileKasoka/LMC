@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BookingForm() {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
   const [form, setForm] = useState({
     clientId: "",
     maidId: "",
@@ -15,6 +17,12 @@ export default function BookingForm() {
     paymentMethod: "Cash",
   });
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
@@ -26,14 +34,12 @@ export default function BookingForm() {
     navigate("/payments/process", { state: form });
   };
 
-  // Inline styles with proper typing
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "0.75rem",
     border: "1px solid #d0d7de",
     borderRadius: "8px",
     fontSize: "0.95rem",
-    transition: "all 0.2s ease",
     backgroundColor: "#f9fafb",
   };
 
@@ -55,7 +61,7 @@ export default function BookingForm() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: "3rem",
+        padding: isMobile ? "1.5rem" : "3rem",
         background: "#f1f5f9",
         minHeight: "100vh",
       }}
@@ -64,7 +70,7 @@ export default function BookingForm() {
         onSubmit={handleSubmit}
         style={{
           background: "#fff",
-          padding: "2.5rem",
+          padding: isMobile ? "1.5rem" : "2.5rem",
           borderRadius: "12px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
           width: "100%",
@@ -80,7 +86,7 @@ export default function BookingForm() {
             textAlign: "center",
             color: "#0f172a",
             marginBottom: "1rem",
-            fontSize: "1.5rem",
+            fontSize: isMobile ? "1.25rem" : "1.5rem",
             fontWeight: 600,
           }}
         >
@@ -127,7 +133,13 @@ export default function BookingForm() {
         </div>
 
         {/* Dates */}
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            gap: "1rem",
+          }}
+        >
           <div style={{ flex: 1 }}>
             <label style={labelStyle}>Start Date</label>
             <input
@@ -216,10 +228,10 @@ export default function BookingForm() {
           style={{
             background: "#0f172a",
             color: "#fff",
-            padding: "0.9rem",
+            padding: isMobile ? "0.8rem" : "0.9rem",
             borderRadius: "8px",
             border: "none",
-            fontSize: "1rem",
+            fontSize: isMobile ? "0.95rem" : "1rem",
             fontWeight: 500,
             cursor: "pointer",
             transition: "background 0.2s ease",

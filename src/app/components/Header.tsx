@@ -15,12 +15,12 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const pathParts = location.pathname
-    .split("/")
-    .filter((p) => p)
-    .map((p) => p.charAt(0).toUpperCase() + p.slice(1));
+  // const pathParts = location.pathname
+  //   .split("/")
+  //   .filter((p) => p)
+  //   .map((p) => p.charAt(0).toUpperCase() + p.slice(1));
 
-  const pageTitle = pathParts.length > 0 ? pathParts.join(" / ") : "Dash";
+  // const pageTitle = pathParts.length > 0 ? pathParts.join(" / ") : "Dash";
 
   const handleLogout = () => {
     console.log("Logging out...");
@@ -70,7 +70,7 @@ export default function Header() {
             <i className="fa-solid fa-bars"></i>
           </button>
         )} */}
-        <h1
+        {/* <h1
           style={{
             fontSize: "1.1rem",
             fontWeight: 600,
@@ -83,7 +83,7 @@ export default function Header() {
           }}
         >
           {pageTitle}
-        </h1>
+        </h1> */}
       </div>
 
       {/* Center Section: Search (hidden or collapsible on mobile) */}
@@ -234,8 +234,8 @@ export default function Header() {
               }}
             >
               {[
-                { label: "Profile", icon: "fa-user", action: () => {} },
-                { label: "Settings", icon: "fa-cog", action: () => {} },
+                { label: "Profile", icon: "fa-user", action: () => navigate("/profile") },
+                { label: "Settings", icon: "fa-cog", action: () => navigate("/settings") },
                 { label: "Logout", icon: "fa-right-from-bracket", action: handleLogout },
               ].map((item) => (
                 <button

@@ -18,6 +18,8 @@ import CreateBooking from "./app/pages/Bookings/CreateBooking";
 import CreateServices from "./app/pages/Services/CreateServices";
 import PaymentProcess from "./app/pages/PaymentsModule/PaymentProcess";
 import PayrollPage from "./app/pages/Payroll";
+import ProfilePage from "./app/pages/Profile";
+import Complaints from "./app/pages/Complaints";
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
           <Route path="clients" element={<Clients />} />
           <Route path="clients/create" element={<CreateClients />} />
           <Route path="clients/:id" element={<ClientDetails />} />
+          <Route path="complaints" element={<Complaints />} />
+          {/* <Route path="complaints/:id" element={<ComplaintDetails />} /> */}
           <Route path="bookings" element={<Bookings />} />
           <Route path="bookings/create" element={<CreateBooking />} />
           <Route path="services" element={<Services />} />
@@ -43,6 +47,9 @@ function App() {
           <Route path="reports" element={<Reports />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="*" element={<div>404 Not Found</div>} />
+          
         </Route>
       </Routes>
     </Router>
