@@ -40,6 +40,7 @@ export default function SideMenu() {
 
   const menuItems: MenuItem[] = [
     { label: "Dashboard", icon: "🏠", to: "/" },
+    { label: "Client Dashboard", icon: "📊", to: "/client/dashboard" },
     {
       label: "Operations",
       icon: "⚙️",
@@ -73,7 +74,7 @@ export default function SideMenu() {
       label: "Analytics & Reports",
       icon: "📊",
       children: [
-        { label: "Performance", to: "/reports/performance" },
+        { label: "Performance", to: "/performance-analytics" },
         { label: "Customer", to: "/reports/customer" },
         { label: "Activity Logs", to: "/reports/activity" },
       ],
