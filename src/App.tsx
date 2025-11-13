@@ -26,8 +26,9 @@ import MessagesDetails from "./app/pages/MessagesDetails";
 import Reviews from "./app/pages/Reviews";
 import Invoices from "./app/pages/Invoices";
 import Availability from "./app/pages/Availability";
-import FindMaid from "./app/pages/Clients/FindMaid";
 import PerformanceAnalytics from "./app/pages/PerformanceAnalytics";
+import FindMaidContainer from "./app/pages/Bookings/FindMaidContainer";
+import BookingFlow from "./app/pages/Bookings/BookingFlow";
 
 
 
@@ -40,7 +41,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="client/dashboard" element={<ClientDashboard />} />
-          <Route path="find-maid" element={<FindMaid />} />
+          <Route path="find-maid" element={<FindMaidContainer />} />
+          <Route path="booking-flow" element={<BookingFlow />} />
           <Route path="maids" element={<Maids/>}/>
           <Route path="maids/create" element={<CreateMaids/>}/>
           <Route path="availability" element={<Availability/>}/>

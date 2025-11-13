@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Home } from "lucide-react"; 
 
 export default function Header() {
   // const location = useLocation();
@@ -142,6 +143,24 @@ export default function Header() {
             <i className="fa-solid fa-search"></i>
           </button>
         )}
+
+      <button
+        onClick={() => navigate("/")}
+        style={{
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          padding: "0.25rem",
+          borderRadius: "6px",
+          transition: "background 0.2s",
+        }}
+        // onMouseEnter={e => (e.currentTarget.style.background = "#e2e8f0")}
+        onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+      >
+        <Home size={20} color="#f8fafc" />
+      </button>
 
         {/* Notifications */}
         <div style={{ position: "relative" }}>
